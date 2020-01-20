@@ -1,0 +1,12 @@
+[2019-08-13 16:21:35] [ERROR] [mongo] (23732) DB ERROR: MongoNetworkError: failed to connect to server [10.62.130.52:27017] on first connect [MongoNetworkError: connection timed out
+    at connectionFailureError (C:\workspace_node\api_server\node_modules\mongodb-core\lib\connection\connect.js:362:14)
+    at Socket.<anonymous> (C:\workspace_node\api_server\node_modules\mongodb-core\lib\connection\connect.js:286:16)
+    at Object.onceWrapper (events.js:291:20)
+    at Socket.emit (events.js:203:13)
+    at Socket._onTimeout (net.js:434:8)
+    at listOnTimeout (internal/timers.js:531:17)
+    at processTimers (internal/timers.js:475:7) {
+  name: 'MongoNetworkError',
+  errorLabels: [Array],
+  [Symbol(mongoErrorContextSymbol)]: {}
+}]

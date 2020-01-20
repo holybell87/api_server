@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Modal Page</title>
+
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- jQuery UI의 표준 스타일 임포트-->
+<link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+
+<!-- jQuery JS -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+
+<script>
+$(function(){
+	$("#btn").click(function(){
+		//잠깐 나타났다가 사라지는 함수
+		//$.growlUI('타이틀', '내용');
+		$.blockUI({
+			//html태그를 문자열로 적용해도 무관함
+			//message : "<table><tr><td>태그테스트</td></tr><table>"
+			message: $('#question')
+			//css 설정
+			, css: {
+				width: '300px'
+			}
+			//모달창 외부 클릭시 닫기
+			, onOverlayClick: $.unblockUI
+		});
+	});
+
+	$("#closebtn").click(function(){
+		//모달창 닫기
+		$.unblockUI();
+	});
+
+
+	// 조회중
+	$("#btn2").click(function(){
+		// 데이터가 없을 경우 (먼저 태그 초기화 한 후에 적용)
+		$("#msg").html("");
+
+		var replyMsg = '데이터 조회 중...';
+
+		$("#msg").html("<div class='ui-widget'>"+
+							"<div class='ui-state-highlight ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+								"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-info' style='/*float: left;*/ margin-right: .3em;'></span>"+
+								replyMsg+"</p>"+
+							"</div>"+
+						"</div>");
+
+	});
+
+	// 조회완료
+	$("#btn3").click(function(){
+		// 데이터가 없을 경우 (먼저 태그 초기화 한 후에 적용)
+		$("#msg").html("");
+
+		var replyCode = '000';
+		var replyMsg = '조회가 완료되었습니다.';
+
+		$("#msg").html("<div class='ui-widget'>"+
+							"<div class='ui-state-highlight ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+								"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-check' style='/*float: left;*/ margin-right: .3em;'></span>"+
+								"<strong>["+replyCode+"]</strong> "+replyMsg+"</p>"+
+							"</div>"+
+						"</div>");
+	});
+
+	// 조회실패
+	$("#btn4").click(function(){
+		// 데이터가 없을 경우 (먼저 태그 초기화 한 후에 적용)
+		$("#msg").html("");
+
+		var allRowsInGrid = 0;
+		var replyCode = '999';
+		var replyMsg = '알 수 없는 오류가 발생하였습니다.';
+
+		$("#msg").html("<div class='ui-widget'>"+
+							"<div class='ui-state-error ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+								"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-alert' style='/*float: left;*/ margin-right: .3em;'></span>"+
+								"<strong>["+replyCode+"]</strong> "+replyMsg+"</p>"+
+							"</div>"+
+						"</div>");
+	});
+})
+</script>
+</head>
+<body>
+	<input type="button" id="btn" value="모달창띄우기"/>
+	<br><br>
+
+	<input type="button" id="btn2" value="조회 중"/>
+	<input type="button" id="btn3" value="조회완료"/>
+	<input type="button" id="btn4" value="조회실패"/>
+
+	<!-- The Message from Server -->
+	<div id="msg" style="width: 500px;">
+		<!--<div class='ui-widget'>
+			<div class='ui-state-highlight ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>
+				<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-info' style='/*float: left;*/ margin-right: .3em;'></span>데이터 조회 중...</p>
+			</div>
+		</div>-->
+	</div>
+	<!-- ./ The Message from Server -->
+
+	<div id="question" style="display:none; cursor: pointer;">
+		<h1>모달창확인</h1>
+		<input type="button" id="closebtn" value="닫기" />
+		<br><br>
+	</div>
+
+</body>
+</html>

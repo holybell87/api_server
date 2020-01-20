@@ -1,0 +1,839 @@
+[2019-08-14 09:20:18] [INFO] [app] (9468) ##########  Startup Server  ##########
+[2019-08-14 09:20:19] [INFO] [scheduler] (9468) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 실행 OS: win32
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 프로세스 ID (id로 종료가능): 9468
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 노드의 실행시간: 4.297629997
+[2019-08-14 09:20:19] [INFO] [scheduler] (9468) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:20:19] [INFO] [app] (9468) API server (Express) has started on port 3001
+[2019-08-14 09:20:18] [INFO] [app] (9468) ## CPU 사용량: { user: 828000, system: 953000 }
+[2019-08-14 09:20:19] [INFO] [mongo] (9468) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:20:19] [INFO] [app] (9468) node version is v12.6.0
+[2019-08-14 09:20:21] [INFO] [app] (18944) ##########  Startup Server  ##########
+[2019-08-14 09:20:21] [INFO] [scheduler] (18944) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 실행 OS: win32
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 프로세스 ID (id로 종료가능): 18944
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 노드의 실행시간: 1.230484708
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:20:21] [INFO] [app] (18944) ## CPU 사용량: { user: 781000, system: 500000 }
+[2019-08-14 09:20:21] [INFO] [scheduler] (18944) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:20:21] [INFO] [app] (18944) API server (Express) has started on port 3001
+[2019-08-14 09:20:21] [INFO] [app] (18944) node version is v12.6.0
+[2019-08-14 09:20:21] [INFO] [mongo] (18944) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:20:22] [INFO] [app] (18944) npm version is 6.10.0
+[2019-08-14 09:20:28] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:20:28',
+  method: 'GET',
+  url: '/keywordListView',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {}
+}
+[2019-08-14 09:20:34] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:20:34',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742034318&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742034318',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:20:40] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:20:40',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742034312&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742034312',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:20:43] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:20:43',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742034321&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%223114378%22%2C%22agentNm%22%3A%22%EA%B9%80%EC%A7%80%EC%98%88%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742034321',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"3114378","agentNm":"김지예","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:21:35] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:21:35',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742086350&rows=50&page=1&sidx=start_date&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%223114378%22%2C%22agentNm%22%3A%22%EA%B9%80%EC%A7%80%EC%98%88%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742086350',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"3114378","agentNm":"김지예","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:22:00] [INFO] [log] (18944) [ Request ]
+{
+  date: '2019-08-14 09:22:00',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742112044&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%223114378%22%2C%22agentNm%22%3A%22%EA%B9%80%EC%A7%80%EC%98%88%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742112044',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"3114378","agentNm":"김지예","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:22:48] [INFO] [app] (14164) ##########  Startup Server  ##########
+[2019-08-14 09:22:48] [INFO] [scheduler] (14164) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 실행 OS: win32
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 프로세스 ID (id로 종료가능): 14164
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 노드의 실행시간: 1.079946052
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:22:48] [INFO] [app] (14164) ## CPU 사용량: { user: 765000, system: 484000 }
+[2019-08-14 09:22:48] [INFO] [scheduler] (14164) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:22:48] [INFO] [app] (14164) API server (Express) has started on port 3001
+[2019-08-14 09:22:48] [INFO] [mongo] (14164) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:22:48] [INFO] [app] (14164) node version is v12.6.0
+[2019-08-14 09:22:49] [INFO] [app] (14164) npm version is 6.10.0
+[2019-08-14 09:22:58] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:22:58',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742178394&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%223114378%22%2C%22agentNm%22%3A%22%EA%B9%80%EC%A7%80%EC%98%88%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742178394',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"3114378","agentNm":"김지예","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:22:58] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:22:58',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742178391&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742178391',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:23:05] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:23:05',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742178388&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742178388',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:23:34] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:23:34',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742214498&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742214498',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:23:34] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:23:34',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742214494&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742214494',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:23:41] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:23:41',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742214492&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742214492',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:24:03] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:24:03',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742243564&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742243564',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:24:04] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:24:04',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742243561&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742243561',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:24:10] [INFO] [log] (14164) [ Request ]
+{
+  date: '2019-08-14 09:24:10',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742243557&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742243557',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:24:16] [INFO] [app] (21120) ##########  Startup Server  ##########
+[2019-08-14 09:24:16] [INFO] [scheduler] (21120) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 실행 OS: win32
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 프로세스 ID (id로 종료가능): 21120
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 노드의 실행시간: 1.022964497
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:24:16] [INFO] [app] (21120) ## CPU 사용량: { user: 750000, system: 390000 }
+[2019-08-14 09:24:16] [INFO] [scheduler] (21120) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:24:16] [INFO] [app] (21120) API server (Express) has started on port 3001
+[2019-08-14 09:24:16] [INFO] [mongo] (21120) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:24:16] [INFO] [app] (21120) node version is v12.6.0
+[2019-08-14 09:24:17] [INFO] [app] (21120) npm version is 6.10.0
+[2019-08-14 09:24:19] [INFO] [log] (21120) [ Request ]
+{
+  date: '2019-08-14 09:24:19',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742259453&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742259453',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:24:26] [INFO] [log] (21120) [ Request ]
+{
+  date: '2019-08-14 09:24:26',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742259457&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742259457',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:24:27] [INFO] [log] (21120) [ Request ]
+{
+  date: '2019-08-14 09:24:27',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742259446&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742259446',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:25:14] [INFO] [app] (10712) ##########  Startup Server  ##########
+[2019-08-14 09:25:14] [INFO] [scheduler] (10712) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 실행 OS: win32
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 프로세스 ID (id로 종료가능): 10712
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 노드의 실행시간: 1.068227437
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:25:14] [INFO] [app] (10712) ## CPU 사용량: { user: 718000, system: 500000 }
+[2019-08-14 09:25:14] [INFO] [scheduler] (10712) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:25:14] [INFO] [app] (10712) API server (Express) has started on port 3001
+[2019-08-14 09:25:14] [INFO] [app] (10712) node version is v12.6.0
+[2019-08-14 09:25:14] [INFO] [mongo] (10712) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:25:15] [INFO] [app] (10712) npm version is 6.10.0
+[2019-08-14 09:25:24] [INFO] [log] (10712) [ Request ]
+{
+  date: '2019-08-14 09:25:24',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742323599&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742323599',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:25:30] [INFO] [log] (10712) [ Request ]
+{
+  date: '2019-08-14 09:25:30',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742323602&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742323602',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:25:31] [INFO] [log] (10712) [ Request ]
+{
+  date: '2019-08-14 09:25:31',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742323596&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742323596',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:25:58] [INFO] [log] (10712) [ Request ]
+{
+  date: '2019-08-14 09:25:58',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742346927&rows=50&page=1&sidx=agent_id&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742346927',
+    rows: '50',
+    page: '1',
+    sidx: 'agent_id',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:26:32] [INFO] [log] (10712) [ Request ]
+{
+  date: '2019-08-14 09:26:32',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742380781&rows=50&page=1&sidx=agent_id&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742380781',
+    rows: '50',
+    page: '1',
+    sidx: 'agent_id',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:27:04] [INFO] [app] (24876) ##########  Startup Server  ##########
+[2019-08-14 09:27:04] [INFO] [scheduler] (24876) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 실행 OS: win32
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 프로세스 ID (id로 종료가능): 24876
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 노드의 실행시간: 1.236858659
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:27:04] [INFO] [app] (24876) ## CPU 사용량: { user: 765000, system: 500000 }
+[2019-08-14 09:27:04] [INFO] [scheduler] (24876) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:27:04] [INFO] [app] (24876) API server (Express) has started on port 3001
+[2019-08-14 09:27:04] [INFO] [mongo] (24876) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:27:04] [INFO] [app] (24876) node version is v12.6.0
+[2019-08-14 09:27:04] [INFO] [app] (24876) npm version is 6.10.0
+[2019-08-14 09:28:36] [INFO] [app] (15628) ##########  Startup Server  ##########
+[2019-08-14 09:28:36] [INFO] [scheduler] (15628) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 실행 OS: win32
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 프로세스 ID (id로 종료가능): 15628
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 노드의 실행시간: 1.091733763
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:28:36] [INFO] [app] (15628) ## CPU 사용량: { user: 703000, system: 453000 }
+[2019-08-14 09:28:36] [INFO] [scheduler] (15628) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:28:36] [INFO] [app] (15628) API server (Express) has started on port 3001
+[2019-08-14 09:28:36] [INFO] [mongo] (15628) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:28:36] [INFO] [app] (15628) node version is v12.6.0
+[2019-08-14 09:28:37] [INFO] [app] (15628) npm version is 6.10.0
+[2019-08-14 09:28:55] [INFO] [log] (15628) [ Request ]
+{
+  date: '2019-08-14 09:28:55',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742534751&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742534751',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:29:00] [INFO] [log] (15628) [ Request ]
+{
+  date: '2019-08-14 09:29:00',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742534748&rows=50&page=1&sidx=count&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742534748',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:29:06] [INFO] [log] (15628) [ Request ]
+{
+  date: '2019-08-14 09:29:06',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742534754&rows=50&page=1&sidx=agent_id&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%EB%A1%9C%EB%B0%8D%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742534754',
+    rows: '50',
+    page: '1',
+    sidx: 'agent_id',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":"로밍"}'
+  }
+}
+[2019-08-14 09:29:09] [INFO] [log] (15628) [ Request ]
+{
+  date: '2019-08-14 09:29:09',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742542725&rows=50&page=1&sidx=count&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742542725',
+    rows: '50',
+    page: '1',
+    sidx: 'count',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:29:16] [INFO] [log] (15628) [ Request ]
+{
+  date: '2019-08-14 09:29:16',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742550149&rows=50&page=1&sidx=keyword&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742550149',
+    rows: '50',
+    page: '1',
+    sidx: 'keyword',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:30:00] [INFO] [scheduler] (15628) Running a job at 2019-08-14 09:30:00
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs/api_server_error.log_2019-08-06.gz → C:\workspace_node\api_server\logs\2019-08/api_server_error.log_2019-08-06.gz
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs/api_server_console.log_2019-08-13.gz → C:\workspace_node\api_server\logs\2019-08/api_server_console.log_2019-08-13.gz
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs/api_server_console.log_2019-08-12.gz → C:\workspace_node\api_server\logs\2019-08/api_server_console.log_2019-08-12.gz
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs_mongo/api_mongo-exception.log_2019-08-12 → C:\workspace_node\api_server\logs_mongo\2019-08/api_mongo-exception.log_2019-08-12
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs_mongo/api_mongo-query.log_2019-08-12 → C:\workspace_node\api_server\logs_mongo\2019-08/api_mongo-query.log_2019-08-12
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs_mongo/api_mongo-exception.log_2019-08-13 → C:\workspace_node\api_server\logs_mongo\2019-08/api_mongo-exception.log_2019-08-13
+[2019-08-14 09:30:00] [INFO] [utility] (15628) [moveFile] rename complete : C:\workspace_node\api_server\logs_mongo/api_mongo-query.log_2019-08-13 → C:\workspace_node\api_server\logs_mongo\2019-08/api_mongo-query.log_2019-08-13
+[2019-08-14 09:32:51] [INFO] [app] (21452) ##########  Startup Server  ##########
+[2019-08-14 09:32:51] [INFO] [scheduler] (21452) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 실행 OS: win32
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 프로세스 ID (id로 종료가능): 21452
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 노드의 실행시간: 1.044476816
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:32:51] [INFO] [app] (21452) ## CPU 사용량: { user: 671000, system: 500000 }
+[2019-08-14 09:32:51] [INFO] [scheduler] (21452) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:32:51] [INFO] [app] (21452) API server (Express) has started on port 3001
+[2019-08-14 09:32:51] [INFO] [mongo] (21452) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:32:51] [INFO] [app] (21452) node version is v12.6.0
+[2019-08-14 09:32:52] [INFO] [app] (21452) npm version is 6.10.0
+[2019-08-14 09:33:41] [INFO] [app] (6196) ##########  Startup Server  ##########
+[2019-08-14 09:33:41] [INFO] [scheduler] (6196) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 실행 OS: win32
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 프로세스 ID (id로 종료가능): 6196
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 노드의 실행시간: 1.132439296
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:33:41] [INFO] [app] (6196) ## CPU 사용량: { user: 734000, system: 390000 }
+[2019-08-14 09:33:41] [INFO] [scheduler] (6196) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:33:41] [INFO] [app] (6196) API server (Express) has started on port 3001
+[2019-08-14 09:33:41] [INFO] [app] (6196) node version is v12.6.0
+[2019-08-14 09:33:41] [INFO] [mongo] (6196) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:33:42] [INFO] [app] (6196) npm version is 6.10.0
+[2019-08-14 09:36:10] [INFO] [app] (7128) ##########  Startup Server  ##########
+[2019-08-14 09:36:10] [INFO] [scheduler] (7128) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 실행 OS: win32
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 프로세스 ID (id로 종료가능): 7128
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 노드의 실행시간: 1.073205091
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:36:10] [INFO] [app] (7128) ## CPU 사용량: { user: 765000, system: 375000 }
+[2019-08-14 09:36:10] [INFO] [scheduler] (7128) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:36:10] [INFO] [app] (7128) API server (Express) has started on port 3001
+[2019-08-14 09:36:11] [INFO] [mongo] (7128) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:36:11] [INFO] [app] (7128) node version is v12.6.0
+[2019-08-14 09:36:12] [INFO] [app] (7128) npm version is 6.10.0
+[2019-08-14 09:36:24] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:36:24',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565742984272&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742984272',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:36:31] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:36:31',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565742984269&rows=50&page=1&sidx=keyword&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742984269',
+    rows: '50',
+    page: '1',
+    sidx: 'keyword',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:36:32] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:36:32',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565742984274&rows=50&page=1&sidx=agent_id&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565742984274',
+    rows: '50',
+    page: '1',
+    sidx: 'agent_id',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":""}'
+  }
+}
+[2019-08-14 09:37:33] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:37:33',
+  method: 'GET',
+  url: '/api/keyword/list_sub2?_search=false&nd=1565743052567&rows=100&page=1&sidx=reckey_cnt&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565743052567',
+    rows: '100',
+    page: '1',
+    sidx: 'reckey_cnt',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:37:39] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:37:39',
+  method: 'GET',
+  url: '/api/keyword/list_sub?_search=false&nd=1565743052565&rows=50&page=1&sidx=keyword&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565743052565',
+    rows: '50',
+    page: '1',
+    sidx: 'keyword',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230"}'
+  }
+}
+[2019-08-14 09:37:40] [INFO] [log] (7128) [ Request ]
+{
+  date: '2019-08-14 09:37:40',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565743052570&rows=50&page=1&sidx=agent_id&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565743052570',
+    rows: '50',
+    page: '1',
+    sidx: 'agent_id',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":""}'
+  }
+}
+[2019-08-14 09:39:27] [INFO] [app] (1652) ##########  Startup Server  ##########
+[2019-08-14 09:39:27] [INFO] [scheduler] (1652) Started the scheduler. Running a task every 9:30
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 설치된 노드버전: v12.6.0
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 실행 아키텍쳐(x64,x86): x64
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 실행 OS: win32
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 프로세스 ID (id로 종료가능): 1652
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 노드의 실행시간: 1.002488261
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## 노드의 실행위치: C:\workspace_node\api_server
+[2019-08-14 09:39:27] [INFO] [app] (1652) ## CPU 사용량: { user: 562000, system: 468000 }
+[2019-08-14 09:39:27] [INFO] [scheduler] (1652) Started the scheduler. Running a task every 21:30
+[2019-08-14 09:39:27] [INFO] [app] (1652) API server (Express) has started on port 3001
+[2019-08-14 09:39:27] [INFO] [mongo] (1652) Connected to mongoDB (v4.0.11) server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:39:27] [INFO] [app] (1652) node version is v12.6.0
+[2019-08-14 09:39:28] [INFO] [app] (1652) npm version is 6.10.0
+[2019-08-14 09:39:37] [INFO] [log] (1652) [ Request ]
+{
+  date: '2019-08-14 09:39:37',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565743176197&rows=50&page=1&sidx=start_date&sord=asc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565743176197',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'asc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":""}'
+  }
+}
+[2019-08-14 09:39:39] [INFO] [log] (1652) [ Request ]
+{
+  date: '2019-08-14 09:39:39',
+  method: 'GET',
+  url: '/api/keyword/list?_search=false&nd=1565743178996&rows=50&page=1&sidx=start_date&sord=desc&param=%7B%22fromDate%22%3A%2220161201%22%2C%22toDate%22%3A%2220161230%22%2C%22agentId%22%3A%22%22%2C%22agentNm%22%3A%22%22%2C%22keyword%22%3A%22%22%7D',
+  status_code: 200,
+  status_message: 'OK',
+  remote_addr: '127.0.0.1:3001',
+  user_ip: '127.0.0.1',
+  entered_data: {
+    _search: 'false',
+    nd: '1565743178996',
+    rows: '50',
+    page: '1',
+    sidx: 'start_date',
+    sord: 'desc',
+    param: '{"fromDate":"20161201","toDate":"20161230","agentId":"","agentNm":"","keyword":""}'
+  }
+}
+[2019-08-14 09:39:46] [INFO] [mongo] (1652) Disconnected to mongoDB server (mongodb://10.62.130.52/ucess)
+[2019-08-14 09:39:46] [INFO] [scheduler] (1652) Stopped the scheduler

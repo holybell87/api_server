@@ -1,0 +1,486 @@
+<!--
+	URL : http://127.0.0.1:3000/public/keywordListView.html 
+	   or http://127.0.0.1:3001/keywordListView
+-->
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>키워드 분석</title>
+
+	<!--jqGrid 환경설정입니다. -->
+	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid/ui.jqgrid.css" />
+	
+	<!-- jQuery js파일을 jqGrid js파일보다 먼저 선언해주어야 합니다. -->
+	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script> 
+	<!-- <script src="js/jquery-ui.min.js" type="text/javascript"></script>  -->
+	<script src="js/jqgrid/i18n/grid.locale-kr.js" type="text/javascript"></script>
+	<script src="js/jqgrid/jquery.jqGrid.min.js" type="text/javascript"></script>
+	
+	<!-- excel export -->
+	<script src="js/jqgrid/tableExport/tableExport.js" type="text/javascript"></script>
+	<script src="js/jqgrid/tableExport/xlsx.core.min.js" type="text/javascript"></script>
+	<script src="js/jqgrid/tableExport/FileSaver.min.js" type="text/javascript"></script>
+	<script src="js/jqgrid/tableExport/html2canvas.min.js" type="text/javascript"></script>
+
+	<script>
+		const url_sub = 'http://127.0.0.1:3001/api/keyword/list_sub';
+		const url_sub2 = 'http://127.0.0.1:3001/api/keyword/list_sub2';
+		const url = 'http://127.0.0.1:3001/api/keyword/list';
+		//const url_sub = 'http://10.62.130.52:3001/api/keyword/list_sub';
+		//const url_sub2 = 'http://10.62.130.52:3001/api/keyword/list_sub2';
+		//const url = 'http://10.62.130.52:3001/api/keyword/list';
+
+		$(document).ready(function() {
+			//makeSampleGrid();
+			makeGrid_sub();
+			makeGrid_sub2();
+			makeGrid();
+
+			// 조회
+			$('#search').click(function (e) {
+				e.preventDefault();
+
+				// 조회중 메시지 표시
+				setMessage('loading');
+
+				// 조회조건
+				var jsonObj = {};
+				jsonObj.fromDate = $("#fromDate").val();
+				jsonObj.toDate = $("#toDate").val();
+
+				//alert(JSON.stringify(jsonObj));
+
+				$("#grid_sub1").setGridParam({
+					url : url_sub,
+					page : 1,				// 첫페이지로 고정
+					datatype : "json",		// 이벤트가 일어나면 컨트롤러단으로 간다. 
+					postData : {"param" : JSON.stringify(jsonObj)},   // 키와 밸류를 들고 간다.
+					loadComplete: function(data){
+						/*$.each(data, function (i, item) {
+							if(i == "rows") {
+								if(item < 1) {
+									setMessage('nothing');
+								} else {
+									setMessage('complete');
+								}
+							}
+						});*/
+					},
+					/*gridComplete : function(){
+					
+					}*/
+				}).trigger("reloadGrid");
+
+				$("#grid_sub2").setGridParam({
+					url : url_sub2,
+					page : 1,				// 첫페이지로 고정
+					datatype : "json",		// 이벤트가 일어나면 컨트롤러단으로 간다. 
+					postData : {"param" : JSON.stringify(jsonObj)},   // 키와 밸류를 들고 간다.
+					loadComplete: function(data){
+						/*$.each(data, function (i, item) {
+							if(i == "rows") {
+								if(item < 1) {
+									setMessage('nothing');
+								} else {
+									setMessage('complete');
+								}
+							}
+						});*/
+					},
+					/*gridComplete : function(){
+					
+					}*/
+				}).trigger("reloadGrid");
+
+				
+				jsonObj.agentId = $("#agentId").val();
+				jsonObj.agentNm = $("#agentNm").val();
+				jsonObj.keyword = $("#keyword").val();
+				$("#grid").setGridParam({
+					url : url,
+					page : 1,				// 첫페이지로 고정
+					datatype : "json",		// 이벤트가 일어나면 컨트롤러단으로 간다. 
+					postData : {"param" : JSON.stringify(jsonObj)},   // 키와 밸류를 들고 간다.
+					loadComplete: function(data){
+						$.each(data, function (i, item) {
+							if(i == "rows") {
+								if(item < 1) {
+									setMessage('nothing');
+								} else {
+									setMessage('complete');
+								}
+							}
+						});
+					},
+					/*gridComplete : function(){
+					
+					}*/
+				}).trigger("reloadGrid");
+			});
+		});
+/*
+		function makeSampleGrid() {
+			var $Grid = {};
+
+			//가상의 local json data
+			var gridData = [
+				{id:"001",name:"김영진",age:26,sex:"남",position:"사원"},
+				{id:"002",name:"송경선",age:25,sex:"남",position:"사원"},
+				{id:"003",name:"이기왕",age:21,sex:"남",position:"사원"},
+				{id:"004",name:"안가영",age:22,sex:"여",position:"선임"},
+				{id:"005",name:"이유리",age:27,sex:"여",position:"선임"}
+			];
+
+			$Grid = $('#grid');
+			$Grid.jqGrid({
+				//url : '../resources/server.json',
+				datatype : "json",
+				mtype : "get",
+				jsonReader : {
+					id : "id" // 대표 아이디를 설정
+					,root : "employee" // 데이터의 시작을 설정
+				},
+				colNames : [
+								'아이디',
+								'이름',
+								'나이',
+								'성별',
+								'직위'
+							],
+				colModel : [
+							{ name : 'id',        width:40,  align:'center'},
+							{ name : 'name',      width:80,  align:'left'  },
+							{ name : 'age',       width:80,  align:'left'  },
+							{ name : 'sex',       width:80,  align:'right' }, 
+							{ name : 'position',  width:50,  align:'right' }
+					],
+				pager : '#pager',
+				rowNum : '10',
+				multiselect : true,
+				postData : {
+					id : 'id',
+					name : 'name'
+				}
+			});
+
+			// 스크립트 변수에 담겨있는 json데이터의 길이만큼
+			for(var i=0;i<=gridData.length;i++){
+				//jqgrid의 addRowData를 이용하여 각각의 row에 gridData변수의 데이터를 add한다
+				$("#grid").jqGrid('addRowData',i+1,gridData[i]);
+			}
+		}
+*/
+		function makeGrid_sub() {
+			$("#grid_sub1").jqGrid({
+				jsonReader: {
+					repeatitems: false
+				},
+
+				//ajax 호출할 페이지
+				url: url_sub,
+
+				//로딩중일때 출력시킬 로딩내용
+				loadtext : '조회중...',
+
+				//응답값
+				//datatype: "json",
+				datatype: 'local', // 자동조회 막기
+
+				//컬럼명들
+				colNames:['키워드','콜 건수'],
+
+				//컬럼모델
+				colModel:[
+					{name:'keyword',	width: 100,	align: 'center'},
+					{name:'count',		width: 60,	align: 'center'}
+				],
+
+				//그리드타이틀
+				caption: '키워드별 콜 건수 (대상 컬렉션: tbl_keyword_result_type2)',
+
+				//한페이지에 출력할 데이터 갯수
+				rowNum : 50, // limit
+				//rowList:[10,20,30,40,50,100,500,1000],
+				rownumbers: true,	// show row numbers
+
+				sortname:'count',
+				viewrecords: true,
+				height:'206',
+				//width: 'auto',
+				width: '360',
+				sortorder: 'desc',
+
+				// 서버에 요청을 보낸 직후 호출하는 이벤트입니다. data는 Ajax호출 후 받아오는 데이터입니다.
+				loadComplete : function(data) {
+
+				},
+
+				// 서버에 보낸 요청이 실패했을 때 발생하는 이벤트입니다.
+				loadError : function(xhr, status, error) {
+
+				}
+			});
+		}
+
+		function makeGrid_sub2() {
+			$("#grid_sub2").jqGrid({
+				jsonReader: {
+					repeatitems: false
+				},
+
+				//ajax 호출할 페이지
+				url: url_sub2,
+
+				//로딩중일때 출력시킬 로딩내용
+				loadtext : '조회중...',
+
+				//응답값
+				//datatype: "json",
+				datatype: 'local', // 자동조회 막기
+
+				//컬럼명들
+				colNames:['통화일자','키워드','총 검출횟수','총 콜건수'],
+
+				//컬럼모델
+				colModel:[
+					{name:'start_date',	width: 70,	align: 'center', formatter: formatDate},
+					{name:'keyword',	width: 90,	align: 'center'},
+					{name:'freq',		width: 80,	align: 'center'},
+					{name:'reckey_cnt',	width: 60,	align: 'center'}
+				],
+
+				//그리드타이틀
+				caption: '일별 키워드 검출 결과 (대상 컬렉션: tbl_mt_keyword_result)',
+
+				//한페이지에 출력할 데이터 갯수
+				rowNum : 100, // limit
+				//rowList:[10,20,30,40,50,100,500,1000],
+				rownumbers: true,	// show row numbers
+
+				sortname:'reckey_cnt',
+				viewrecords: true,
+				height:'206',
+				//width: 'auto',
+				width: '460',
+				sortorder: 'desc',
+
+				// 서버에 요청을 보낸 직후 호출하는 이벤트입니다. data는 Ajax호출 후 받아오는 데이터입니다.
+				loadComplete : function(data) {
+
+				},
+
+				// 서버에 보낸 요청이 실패했을 때 발생하는 이벤트입니다.
+				loadError : function(xhr, status, error) {
+
+				}
+			});
+		}
+
+		function makeGrid() {
+			$("#grid").jqGrid({
+				jsonReader: {
+					repeatitems: false
+				},
+
+				//ajax 호출할 페이지
+				url: url,
+
+				//로딩중일때 출력시킬 로딩내용
+				loadtext : '조회중...',
+
+				//응답값
+				//datatype: "json",
+				datatype: 'local', // 자동조회 막기
+
+				//컬럼명들
+				colNames:['통화일자','녹취키','직원ID','직원명','센터코드','센터명','키워드','검출횟수'],
+
+				//컬럼모델
+				colModel:[
+					{name:'start_date',		width: 70,	align: 'center', formatter: formatDate},
+					{name:'rest_send_key',	width: 220,	align: 'left'},
+					{name:'agent_id',		width: 70,	align: 'center'},
+					{name:'agent_nm',		width: 70,	align: 'center'},
+					{name:'center_cd',		width: 70,	align: 'center'},
+					{name:'center_nm',		width: 100,	align: 'center'},
+					{name:'keyword',		width: 100,	align: 'center'},
+					{name:'freq',			width: 80,	align: 'center'}
+				],
+
+				//그리드타이틀
+				caption: '키워드 분석 결과 (대상 컬렉션: tbl_keyword_result_type2)',
+
+				pager : '#pager2',
+
+				//한페이지에 출력할 데이터 갯수
+				rowNum : 50, // limit
+				rowList:[10,20,30,40,50,100,500,1000],
+				rownumbers: true,	// show row numbers
+
+				sortname:'start_date',
+				viewrecords: true,
+				height:'338',
+				//width: 'auto',
+				width: '820',
+				sortorder: 'desc',
+
+				// 서버에 요청을 보낸 직후 호출하는 이벤트입니다. data는 Ajax호출 후 받아오는 데이터입니다.
+				loadComplete : function(data) {
+					var replyCode = data.replyCode;
+					var replyMsg = data.replyMsg;
+
+					// 그리드 데이터 총 갯수
+					var allRowsInGrid = $('#grid').jqGrid('getGridParam','records');
+
+					// 데이터가 없을 경우 (먼저 태그 초기화 한 후에 적용)
+					$("#msg").html("");
+
+					if(allRowsInGrid > 0) { // 데이터 있음
+						setMessage('complete');
+					} else if(allRowsInGrid == 0) { // 데이터 없음
+						setMessage('nothing');
+					}
+				},
+
+				// 서버에 보낸 요청이 실패했을 때 발생하는 이벤트입니다.
+				loadError : function(xhr, status, error) {
+					var replyCode = '999';
+					var replyMsg = error.message;
+
+					$("#msg").html("<div class='ui-widget'>"+
+										"<div class='ui-state-error ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+											"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-alert' style='/*float: left;*/ margin-right: .3em;'></span>"+
+											"<strong>["+replyCode+"]</strong> "+replyMsg+"</p>"+
+										"</div>"+
+									"</div>");
+				}
+			}).navGrid('#pager2',{view:false, search:false, edit:false, add:false, del:false}, 
+			{}, // default settings for edit
+			{}, // default settings for add
+			{}, // delete instead that del:false we need this
+			{}, // search options
+			{}  // view parameters
+			).navButtonAdd('#pager2',{
+				caption:"<font color='#47C83E'>excel</font>",	// 버튼명
+				buttonicon: "ui-icon-document",
+				title: '엑셀 다운로드',
+				onClickButton: function () {
+					const allRowsInGrid = $('#grid').jqGrid('getGridParam','records');
+					if(allRowsInGrid < 1) {
+						alert('조회내역이 없습니다.');
+						return;
+					}
+
+					// https://www.npmjs.com/package/tableexport.jquery.plugin
+					// https://github.com/hhurz/tableExport.jquery.plugin
+					$('#gview_grid').tableExport({
+						fileName:"키워드 분석결과_" + new Date().toISOString().replace(/[\-\:\.]/g, "")
+						,type:'excel'
+						,excelstyles:['background-color', 'font-weight', 'text-align', 'width', 'font-size']
+						,mso: {  styles:['background-color', 'font-weight', 'text-align', 'width', 'font-size']
+								,worksheetName: "Sheet"
+								,fileFormat: "xlsx"}
+						,ignoreRow: null                    // (Number, Number[]), row indices to exclude from the exported file(s)
+						,ignoreColumn: [13,14,15,16,17,18]  // (Number, Number[]), column indices to exclude from the exported file(s)
+						,htmlContent: false
+						,exportHiddenCells: true
+					});
+				}
+			})
+			;
+		}
+
+		function formatDate(cellValue, options, rowObject) {
+			/*var val = parseInt((cellValue.replace(/,/g,'').replace('원','')))	// replaceAll처럼 사용하기:replace(/대상문자/g, '바꿀문자')
+			var color = (val > 30000000) ? "blue" : "red";
+			var cellHtml = "<span style='color:" + color + "' originalValue='" +
+							cellValue + "'>" + cellValue + "</span>";
+
+			return cellHtml;
+			*/
+
+			//let val = cellValue.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+			let val = cellValue.replace(/^([0-9]{4})([0-9]{2})([0-9]{2})/,"$1-$2-$3");
+			return val;
+		}
+
+		function setMessage(type) {
+			var replyCode = '';
+			var replyMsg = '';
+
+			if(type == 'loading') { // 조회중
+				replyMsg = '데이터 조회 중...';
+
+				$("#msg").html("<div class='ui-widget'>"+
+									"<div class='ui-state-highlight ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+										"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-info' style='/*float: left;*/ margin-right: .3em;'></span>"+
+										replyMsg+"</p>"+
+									"</div>"+
+								"</div>");
+			} else if(type == 'complete') { // 조회완료
+				replyCode = '000';
+				replyMsg = '조회가 완료되었습니다.';
+
+				$("#msg").html("<div class='ui-widget'>"+
+									"<div class='ui-state-highlight ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+										"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-check' style='/*float: left;*/ margin-right: .3em;'></span>"+
+										"<strong>["+replyCode+"]</strong> "+replyMsg+"</p>"+
+									"</div>"+
+								"</div>");
+			} else if(type == 'nothing') { // 조회내역 없음
+				replyCode = '999';
+				replyMsg = '조회내역이 없습니다.';
+
+				$("#msg").html("<div class='ui-widget'>"+
+									"<div class='ui-state-error ui-corner-all' style='margin-top: 20px; padding: 0 .7em;'>"+
+										"<p style='margin:10px 10px 10px;font-size: 12px;'><span class='ui-icon ui-icon-alert' style='/*float: left;*/ margin-right: .3em;'></span>"+
+										"<strong>["+replyCode+"]</strong> "+replyMsg+"</p>"+
+									"</div>"+
+								"</div>");
+			}
+		}
+	</script>
+</head>
+<body>
+<!--
+	<table id="grid"></table>
+	<div id="pager"></div>
+
+	<br>
+-->
+
+<div>
+	<div>
+		통화일자 : 
+		<input type="text" id="fromDate" value="20160601">~
+		<input type="text" id="toDate" value="20161230">
+		<input type="button" id="search" value="조회" />
+		<br>
+		상담원ID : <input type="text" id="agentId" value="3114378">
+		상담원명 : <input type="text" id="agentNm" value="김지예">
+		키워드 : <input type="text" id="keyword" value="로밍">
+	</div>
+
+	<br>
+
+	<table id="grid_sub1"></table>
+	<br>
+	<table id="grid_sub2"></table>
+
+	<br>
+
+	<table id="grid"></table>
+	<div id="pager2"></div>
+
+	<!-- The Message from Server -->
+	<div id="msg" style="width: 822px;">
+	</div>
+	<!-- ./ The Message from Server -->
+</div>
+
+
+</body>
+</html>

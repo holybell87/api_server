@@ -1,0 +1,521 @@
+<!-- https://socket.io/docs/client-api/ -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="./css/style.css" rel="stylesheet">
+
+<style>
+.pages { /*height: 100%;*/ margin: 0; padding: 0; width: 100%;}
+.page { height: 100%; position: absolute; width: 100%;}
+.login.page .form{
+	height: 100px; margin-top: -100px; position: absolute;
+	text-align: center; top: 50%; width: 100%;
+}
+.login.page {
+	background-color: WHITE;
+}
+
+form {
+	display: inline;
+}
+
+.notice {
+	/*margin: 0 0 10px;*/
+	font-style: italic;
+	font-size: 12px;
+	color: #999;
+}
+</style>
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript" src="./js/socket.io.js"></script>
+<!--<script type="text/javascript" src="./js/io.js"></script>-->
+
+<!------ Include the above in your HEAD tag ---------->
+
+
+<ul class="pages">
+	<li class = "chat page">
+		<div class="userList">
+			<h2>현재 접속자</h2>
+			<ul id="userList2"></ul>
+		</div>
+
+		<hr>
+		<ul id="messages"></ul>
+		<!--<form>
+			<input id="m" autocomplete="off" /><button>Send</button>
+		</form>-->
+	</li>
+
+	<li class="login page">
+		<div class="form">
+			<h3 class="title">별명을 입력해 주세요!<br></h3>
+			<input class="usernameInput" type="text" /><button type="button" onclick="setName()">입장</button>
+		</div>
+	</li>
+</ul>
+
+
+<div class="container" style="    float: right; margin: 10; position: inherit;">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <span class="glyphicon glyphicon-comment"></span> 채팅방 [접속자: <span id="userList"></span>]
+                    <div class="btn-group pull-right">
+                        <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                    </div>
+                </div>
+            <div class="panel-collapse collapse" id="collapseOne">
+                <div class="panel-body">
+                    <ul class="chat" id="chat_box">
+                        <!-- You -->
+                        <!--<li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>-->
+                        <!-- ./You-->
+
+                        <!-- Me-->
+                        <!--<li class="right clearfix"><span class="chat-img pull-right">
+                            <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                </div>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                    dolor, quis ullamcorper ligula sodales.
+                                </p>
+                            </div>
+                        </li>-->
+                        <!-- Me-->
+                    </ul>
+                </div>
+                <div class="panel-footer">
+					<p id="notice" class="notice">&nbsp;</p>
+					<form>
+						<div class="input-group">
+								<input id="btn-input" type="text" autocomplete="off" class="form-control input-sm" placeholder="Type your message here..." />
+								<span class="input-group-btn">
+									<button class="btn btn-warning btn-sm" id="btn-chat">
+										Send</button>
+								</span>
+						</div>
+					</form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 채팅방 이름
+var room_name = '';
+
+var COLORS = [
+	'#e21400', '#91580f', '#f8a700', '#f78b00',
+	'#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+	'#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+];
+ 
+var $window = $(window);
+var loginPage = $('.login.page');
+var chatPage = $('.chat.page');
+var container = $('.container');
+ 
+var username; // 사용자가 입력한 닉네임
+var socket = io();
+ 
+// 채팅방 숨김
+container.hide();
+
+function setName() {
+	username = $('.usernameInput').val();
+	if(username) {
+		loginPage.fadeOut();
+		chatPage.show();
+		container.show();
+
+		loginPage.off('click');
+ 
+		socket.emit('create room', username);
+		socket.emit('add user', username);
+	}
+} //처음 이름 설정시
+ 
+function getColor(username) {
+	var hash = 7;
+	for (var i = 0; i < username.length; i++) {
+		hash = username.charCodeAt(i) + (hash << 5) - hash;
+	}
+
+	var index = Math.abs(hash % COLORS.length);
+
+	return COLORS[index];
+}// 이름에 색칠 정해주기
+ 
+function userListUpdate(userlist) {
+	$('#userList').text('');
+	var str='';
+
+	for(var i=0; i<userlist.length; i++) {
+		if(i==(userlist.length-1)) {
+			str+= userlist[i];
+		} else {
+			str += userlist[i]+', ';
+		}
+	}
+
+	$('#userList').text(str);
+}
+ 
+$window.keydown(function(event) {
+	if(event.which == 13) {
+		if(username) {
+			/* sendMessage();
+			socket.emit('stop typing');
+			typing = false; */
+		}else{
+			setName();
+		}
+	}
+});//엔터를 누를시
+ 
+$('form').submit(function() {
+	if($('#btn-input').val() == '') {
+		return false;
+	}
+
+	//if($('#m').val()[0]=='/') {
+	if($('#btn-input').val()[0]=='/') {
+		//if($('#m').val()[1]=='c') {
+		if($('#btn-input').val()[1]=='c') { // 닉네임 변경
+			//socket.emit('change nickname',$('#m').val().substring(3));
+			 socket.emit('change nickname',$('#btn-input').val().substring(3));
+
+			// 전역변수도 변경된 닉네임으로 update
+			username = $('#btn-input').val().substring(3);
+		}
+		//else if($('#m').val()[1]=='w') {
+		else if($('#btn-input').val()[1]=='w') { // 귓속말
+			//var newmsg = $('#m').val().substring(3);
+			var newmsg = $('#btn-input').val().substring(3);
+			var index = newmsg.indexOf(' ');
+			var to = newmsg.substring(0,index);
+			var msg = newmsg.substring(index+1,newmsg.length);
+			//alert('to: '+to+" / msg: "+msg);
+			socket.emit('whisper',{
+				To:to,
+				Msg:msg
+			});
+
+			$('#btn-input').val('');
+			$('#btn-input').focus();
+		}
+		else if($('#btn-input').val()[1]=='q') { // 나가기
+			socket.emit("stop typing", {roomname: room_name});
+			//socket.disconnect(); // 소켓 연결 종료
+			socket.emit("user logout", room_name);
+
+			window.location.replace('index.html')
+		}
+	} else{
+		//socket.emit('chat message', $('#m').val());
+		//$('#m').val('');
+
+		socket.emit('chat message', {roomname: room_name, msg: $('#btn-input').val()});
+		socket.emit("stop typing", {roomname: room_name});
+		$('#btn-input').val('');
+		$('#btn-input').focus();
+	}
+
+	return false;
+});// client에서 server로 msg 전송
+ 
+socket.on('create room', function(data) {
+	console.log(data.username);
+	console.log(data.userlist);
+	console.log(data.room);
+
+	room_name = data.room;
+
+	//var msg = data.username + '님이 입장하셨습니다';
+	//var updateData = {'username':data.username, 'message': msg};
+	//updateChatMessageFromAdmin(updateData);
+
+	//$('#messages').append($('<li class="noti">').text(data.username + '님이 입장하셨습니다'));
+	//userListUpdate(data.userlist);
+});
+
+socket.on('new nickname', function(data) {
+	var msg = data.pastname + '님이 ' +data.newname+'으로 닉네임을 변경하였습니다.';
+	var updateData = {'username':data.pastname, 'message': msg};
+	updateChatMessageFromAdmin(updateData);
+
+	$('#messages').append($('<li class="noti">').text(data.pastname + '님이 ' +data.newname+'으로 닉네임을 변경하였습니다.' ));
+	userListUpdate(data.userlist);
+});
+ 
+socket.on('chat message', function(data) {
+	var span = $('<span class="nickname">').text(data.username).css('color', getColor(data.username)).append(' : ');
+	var li = $('<li>').append(span).append(data.message);
+	$('#messages').append(li);
+
+	updateChatMessage(data);
+}); //chat 내용을 채팅창에 출력
+
+socket.on('whisper chat message', function(data) {
+	var span = $('<span class="nickname">').text(data.username + data.username_sub).css('color', getColor(data.username)).append(' : ');
+	var li = $('<li>').append(span).append(data.message);
+	$('#messages').append(li);
+
+	updateChatMessageWhisper(data);
+}); //chat 내용을 채팅창에 출력
+
+socket.on('user joined', function(data) {
+	var msg = data.username + '님이 입장하셨습니다';
+	var updateData = {'username':data.username, 'message': msg};
+	updateChatMessageFromAdmin(updateData);
+
+	$('#messages').append($('<li class="noti">').text(data.username + '님이 입장하셨습니다'));
+	userListUpdate(data.userlist);
+});
+ 
+socket.on('new people',function(data) {
+	var msg = data.username + '님이 입장하셨습니다';
+	var updateData = {'username':data.username, 'message': msg};
+	updateChatMessageFromAdmin(updateData);
+
+	$('#messages').append($('<li class="noti">').text(data.username + '님이 입장하셨습니다'));
+	userListUpdate(data.userlist);
+});
+ 
+socket.on('user disconnect',function(data) {
+	var msg = data.username + '님의 연결이 해제되었습니다';
+	var updateData = {'username':data.username, 'message': msg};
+	updateChatMessageFromAdmin(updateData);
+
+	$('#messages').append($('<li class="noti">').text(data.username + '님의 연결이 해제되었습니다'));
+	userListUpdate(data.userlist);
+}); 
+
+socket.on('user logout',function(data) {
+	var msg = data.username + '님이 퇴장하셨습니다';
+	var updateData = {'username':data.username, 'message': msg};
+	updateChatMessageFromAdmin(updateData);
+
+	$('#messages').append($('<li class="noti">').text(data.username + '님이 퇴장하셨습니다'));
+	userListUpdate(data.userlist);
+}); 
+
+
+var typing_notice = document.querySelector("#notice");
+
+$("#btn-input").on("keyup", function () {
+	var flag = false;
+	var keycode = event.which;
+	if(keycode == 32 || (keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 96 && keycode <= 107)
+		|| (keycode >= 109 && keycode <= 111) || (keycode >= 186 && keycode <= 192) || (keycode >= 219 && keycode <= 222) || keycode == 229) {
+		flag = true;
+	}
+
+	if(this.value[0]=='/') {
+		flag = false;
+	}
+
+
+/*	if(event.keyCode == 8 || event.keyCode < 48 && (event.keyCode > 57 &&  event.keyCode < 65 )&& ( keyCode > 122 && event.keyCode <= 127)) { //
+		flag = false;
+	}
+*/
+	if(flag) {
+		socket.emit("typing", {username: username, roomname: room_name});
+	}
+
+	if(this.value == '') {
+		socket.emit("stop typing", {roomname: room_name});
+	}
+});
+
+//socket.on("typing", function (user) {
+socket.on("typing", function (user) {
+	typing_notice.innerHTML  = user + "님이 메시지를 입력중입니다...";
+})
+
+socket.on("stop typing", function () {
+	//console.log('stop typing from '+room_name);
+	typing_notice.innerHTML  = "&nbsp;";
+})
+
+function updateChatMessageWhisper(data) {
+	var ul = document.querySelector("#chat_box");
+	var div = document.createElement("div"); // li태그 생성
+	var value = '';
+
+	if(username == data.username) {
+		value += "<li class='right clearfix'>";
+		value += "    <span class='chat-img pull-right'>";
+		value += "        <img src='http://placehold.it/50/FA6F57/fff&text=ME' alt='User Avatar' class='img-circle' />";
+		value += "    </span>";
+		value += "    <div class='chat-body clearfix'>";
+		value += "        <div class='header'>";
+		value += "            <small class='text-muted'><span class='glyphicon glyphicon-time'></span>"+currentTime()+"</small>";
+		value += "                <strong class='pull-right primary-font'>" + data.username + " ("+ data.username_sub + ")" + "</strong>";
+		value += "        </div>";
+		value += "        <p>";
+		value +=          data.message
+		value += "        </p>";
+		value += "    </div>";
+		value += "</li>";
+	} else {
+		value += "<li class='left clearfix'>";
+		value += "    <span class='chat-img pull-left'>";
+		value += "        <img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' />";
+		value += "    </span>";
+		value += "    <div class='chat-body clearfix'>";
+		value += "        <div class='header'>";
+		value += "            <strong class='primary-font'>" + data.username + " ("+ data.username_sub + ")" + "</strong> <small class='pull-right text-muted'>";
+		value += "                <span class='glyphicon glyphicon-time'></span>"+currentTime()+"</small>";
+		value += "        </div>";
+		value += "        <p>";
+		value +=          data.message
+		value += "        </p>";
+		value += "    </div>";
+		value += "</li>";
+	}
+
+	div.innerHTML = value;
+	ul.appendChild(div);
+
+	// 스크롤 마지막줄로 이동
+	$('.panel-body').scrollTop($('.panel-body').prop("scrollHeight"));
+}
+
+function updateChatMessageFromAdmin(data) {
+	var ul = document.querySelector("#chat_box");
+	var div = document.createElement("div"); // li태그 생성
+
+	var value = '';
+	value += "<li class='left clearfix'>";
+	value += "    <span class='chat-img pull-left'>";
+	value += "        <img src='http://placehold.it/50/47C83E/ffff&text=A' alt='User Avatar' class='img-circle' />";
+	value += "    </span>";
+	value += "    <div class='chat-body clearfix'>";
+	value += "        <div class='header'>";
+	value += "            <strong class='primary-font'>[알림]</strong> <small class='pull-right text-muted'>";
+	value += "                <span class='glyphicon glyphicon-time'></span>"+currentTime()+"</small>";
+	value += "        </div>";
+	value += "        <p>";
+	value +=          data.message
+	value += "        </p>";
+	value += "    </div>";
+	value += "</li>";
+
+	div.innerHTML = value;
+	ul.appendChild(div);
+
+	// 스크롤 마지막줄로 이동
+	$('.panel-body').scrollTop($('.panel-body').prop("scrollHeight"));
+}
+
+function updateChatMessage(data) {
+	var ul = document.querySelector("#chat_box");
+	var div = document.createElement("div"); // li태그 생성
+	var value = '';
+	var tmp = '';
+
+	if(username == data.username) {
+		value += "<li class='right clearfix'>";
+		value += "    <span class='chat-img pull-right'>";
+		value += "        <img src='http://placehold.it/50/FA6F57/fff&text=ME' alt='User Avatar' class='img-circle' />";
+		value += "    </span>";
+		value += "    <div class='chat-body clearfix'>";
+		value += "        <div class='header'>";
+		value += "            <small class='text-muted'><span class='glyphicon glyphicon-time'></span>"+currentTime()+"</small>";
+		value += "                <strong class='pull-right primary-font'>" + data.username + "</strong>";
+		value += "        </div>";
+		value += "        <p>";
+		value +=          data.message
+		value += "        </p>";
+		value += "    </div>";
+		value += "</li>";
+	} else {
+		value += "<li class='left clearfix'>";
+		value += "    <span class='chat-img pull-left'>";
+		if(data.username == 'admin') {
+			value += "        <img src='http://placehold.it/50/47C83E/ffff&text=A' alt='User Avatar' class='img-circle' />";
+			tmp = '[알림]';
+		} else {
+			value += "        <img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' />";
+			tmp = data.username;
+		}
+
+		//value += "        <img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' />";
+		value += "    </span>";
+		value += "    <div class='chat-body clearfix'>";
+		value += "        <div class='header'>";
+		value += "            <strong class='primary-font'>" + tmp + "</strong> <small class='pull-right text-muted'>";
+		value += "                <span class='glyphicon glyphicon-time'></span>"+currentTime()+"</small>";
+		value += "        </div>";
+		value += "        <p>";
+		value +=          data.message
+		value += "        </p>";
+		value += "    </div>";
+		value += "</li>";
+	}
+
+	div.innerHTML = value;
+	ul.appendChild(div);
+
+	// 스크롤 마지막줄로 이동
+	$('.panel-body').scrollTop($('.panel-body').prop("scrollHeight"));
+}
+
+function currentTime() {
+	//현재시간 구하기
+	 var d = new Date();
+
+	// 2008-03-01 10:30:25 표현식
+	var s =
+	leadingZeros(d.getFullYear(), 4) + '-' +
+	leadingZeros(d.getMonth() + 1, 2) + '-' +
+	leadingZeros(d.getDate(), 2) + ' ' +
+	leadingZeros(d.getHours(), 2) + ':' +
+	leadingZeros(d.getMinutes(), 2) + ':' +
+	leadingZeros(d.getSeconds(), 2);
+
+	return s;
+}
+
+function leadingZeros(n, digits) {
+	// 1 -> 01 과 같이 변경하기
+	var zero = '';
+	n = n.toString();
+
+	if(n.length < digits) {
+		for(i = 0; i < digits - n.length; i++) {
+			zero += '0';
+		}
+	}
+
+	return zero + n;
+}
+</script>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Download Page</title>
+
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- jQuery JS -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.js"></script>
+<!-- <script type="text/javascript" src="http://malsup.github.com/jquery.form.js"></script> -->
+<script type="text/javascript" src="js/sha256.js"></script>
+
+<script>
+var host = '10.62.130.52';
+//var host = '127.0.0.1';
+
+$(document).ready(function() {
+	// loading bar setting - start
+	var div = document.createElement("div");
+	div.setAttribute('id', 'loadingWrap')
+	div.style.width = [screen.width, 'px'].join('');
+	div.style.height = [screen.height, 'px'].join('');
+	div.style.background = '#EEE';
+	div.style.backgroundImage = 'url(http://www.pentairthermal.com/Images/loading-ttcredesign.gif)';
+	div.style.backgroundRepeat = 'no-repeat';
+	div.style.backgroundPosition = '34% 30%';
+	div.style.zIndex = '99999'
+	div.style.opacity = "0.5";
+	div.style.position = 'fixed';
+	div.style.top = 0;
+	div.style.left = 0;
+	div.style.display = 'none';
+	document.body.insertBefore(div, document.body.childNodes[0]);
+	// loading bar setting - end
+
+/*
+	// Ajax 호출 요청될 때, 자동으로 로딩이미지 띄워주는 스크립트 코드
+	$.ajaxSetup({
+		url: '',
+		beforeSend: function(xhr) {
+			$('#loadingWrap').show(); // 로딩이미지 보여주기
+			setTimeout(function() {}, 1000); // 너무 순식간에 지나갈까봐 1초의 시간동안 멈추는 테스트 코드
+		}
+	});
+*/
+	$('#login').click(function (e) {
+		e.preventDefault();
+
+		login();
+	});
+
+
+	$('#setFileUpload').click(function (e) {
+		e.preventDefault();
+
+		if($("#token").val() == '') {
+			alert('token is required!\r\nplease login.');
+			return;
+		}
+
+		if($("#fileName").val() == '') {
+			alert('choose file to upload');
+			return;
+		}
+
+		// 확장자 소문자 변환 후 체크
+		var ext = $("#fileName").val().split('.').pop().toLowerCase();
+		if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+			alert('gif,png,jpg,jpeg 파일만 업로드 할 수 있습니다.');
+			return;
+		}
+
+		//var formData =  $("#multiForm").serialize();
+		//var formData = new FormData();
+		//formData.append("fileName", $("input[name=fileName]").val());
+
+		//var formData = new FormData();
+		//formData.append("fileName",$("input[name=fileName]")[0].files[0]);
+
+		//var formData = new FormData();
+		//formData.append("test2", $("input[name=test2]").val());
+		//formData.append("test3", $("textarea[name=test3]").text());
+		//formData.append("test4", $("input[name=test4]")[0].files[0]);
+
+		// <form id="ajaxform" action="/saveFileTest.do" method="post" enctype="multipart/form-data">
+		// 	<input type="text" name="test2"/><br/>
+		// 	<textarea rows="10" cols="10" name="test3"></textarea><br/>
+		// 	<input type="file" name="test4" />
+		// 	<input type="button" id="btn" value="전송" />
+		// </form>
+
+
+		 //폼객체를 불러와서
+		var form = $('form')[0];
+		//FormData parameter에 담아줌
+		var formData = new FormData(form);
+
+		$.ajax({
+			type: 'POST',
+			url: 'http://'+host+':3001/api/user/fileupload?user_id='+$("#user_id").val(),
+			dataType: 'json',
+			processData: false,
+            contentType: false,
+        	data: formData,
+			beforeSend : function(xhr){
+				xhr.setRequestHeader("x-access-token", $('#token').val());
+				//xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+				$('#loadingWrap').show(); // 로딩이미지 보여주기
+				setTimeout(function() {}, 1000); // 너무 순식간에 지나갈까봐 1초의 시간동안 멈추는 테스트 코드
+			},
+			success: function(data) {
+				if(typeof data.error == "undefined") { // 성공
+					var code = data.code;
+					if(code == 200) {
+						//alert(data.fileInfo);
+						alert('파일 업로드 완료!');
+
+						getFileList();
+					}
+				} else { // 실패
+					var error = data.error;
+					alert(error.detail);
+
+					if(error.detail == 'jwt expired') {
+						requestToken();
+					}
+				}
+			},
+			error : function(request, status, error) {
+				//alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
+				//alert("code : " + request.status + "\r\nstatus : " + status);
+
+				alert(request.responseJSON.error.detail);
+
+				if(request.responseJSON.error.detail == 'jwt expired') {
+					requestToken();
+				}
+			}
+		}).always(function() {
+			$('#loadingWrap').hide(); // 로딩이미지 숨기기
+		});
+	});
+
+	$('#getFileList').click(function (e) {
+		e.preventDefault();
+
+		getFileList();
+	});
+
+	$('#getUserList').click(function (e) {
+		e.preventDefault();
+
+		getUserList();
+	});
+
+	/*$('#clear').click(function (e) {
+		e.preventDefault();
+		$("#token").val('');
+	});*/
+});
+
+function login() {
+	$.ajax({
+		type: 'POST',
+		url: 'http://'+host+':3001/api/auth/login',
+		dataType: 'json',
+		data: {
+			user_id: $("#user_id").val(),
+			//user_password: $("#user_password").val()
+			user_password: SHA256($("#user_password").val())
+		},
+		beforeSend : function(xhr){
+			$('#loadingWrap').show(); // 로딩이미지 보여주기
+			setTimeout(function() {}, 1000); // 너무 순식간에 지나갈까봐 1초의 시간동안 멈추는 테스트 코드
+		},
+		success: function(data) {
+			// 초기화
+			$('#filelist').empty();
+
+			if(typeof data.error == "undefined") { // 성공
+				var code = data.code;
+				if(code == 200) {
+					var token = data.detail.token;
+					$('#token').val(token.accessToken);
+				}	
+			} else { // 실패
+				var error = data.error;
+				alert(error.detail);
+
+				$("#token").val('');
+			}
+		},
+		error : function(request, status, error) {
+			//alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
+			alert("code : " + request.status + "\r\nstatus : " + status);
+		}
+	})
+	.always(function() {
+		$('#loadingWrap').hide(); // 로딩이미지 숨기기
+	});
+}
+
+function checkEnter() {
+	if (window.event.keyCode == 13) {
+		// 엔터키가 눌렸을 때 실행할 내용
+		login();
+	}
+}
+
+function requestToken() {
+	$.ajax({
+		type: 'GET',
+		url: 'http://'+host+':3001/api/auth/requestToken?user_id='+$("#user_id").val(),
+		dataType: 'json',
+		beforeSend : function(xhr){
+			$('#loadingWrap').show(); // 로딩이미지 보여주기
+			setTimeout(function() {}, 1000); // 너무 순식간에 지나갈까봐 1초의 시간동안 멈추는 테스트 코드
+		},
+		success: function(data) {
+			if(typeof data.error == "undefined") { // 성공
+				var code = data.code;
+				if(code == 200) {
+					var token = data.detail.token;
+					$('#token').val(token.accessToken);
+
+					alert('토큰이 만료되어 재발급되었습니다.');
+				}	
+			} else { // 실패
+				var error = data.error;
+				alert(error.detail);
+			}
+		},
+		error : function(request, status, error) {
+			//alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
+			alert("code : " + request.status + "\r\nstatus : " + status);
+		}
+	})
+	.always(function() {
+		$('#loadingWrap').hide(); // 로딩이미지 숨기기
+	});
+}
+
+// 파일 목록 조회
+function getFileList() {
+	if($("#token").val() == '') {
+		alert('token is required!\r\nplease login.');
+		return;
+	}
+
+	$.ajax({
+		type: 'GET',
+		url: 'http://'+host+':3001/api/user/filelist?user_id='+$("#user_id").val()+'&pageNum=1&limit=100',
+		dataType: 'json',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader("x-access-token", $('#token').val());
+			//xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+			$('#loadingWrap').show(); // 로딩이미지 보여주기
+			setTimeout(function() {}, 1000); // 너무 순식간에 지나갈까봐 1초의 시간동안 멈추는 테스트 코드
+		},
+		success: function(data) {
+			if(typeof data.error == "undefined") { // 성공
+				var code = data.code;
+				if(code == 200) {
+					var filelist = data.result;
+					//console.log(filelist)
+
+					// 초기화
+					$('#filelist').empty();
+
+					for(var i=0; i<filelist.length; i++) {
+						$('#filelist').append('<li><a href="javascript:filedownload(\'' + filelist[i].savedFileNm + '\')">' + filelist[i].originalFileNm + '</a></li>');
+					}
+				}
+			} else { // 실패
+				var error = data.error;
+				alert(error.detail);
+
+				if(error.detail == 'jwt expired') {
+					requestToken();
+				}
+			}
+		},
+		error : function(request, status, error) {
+			//alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
+			//alert("code : " + request.status + "\r\nstatus : " + status);
+			//alert(request.reponseText.error.detail);
+			alert(request.responseJSON.error.detail);
+
+			if(request.responseJSON.error.detail == 'jwt expired') {
+				requestToken();
+			}
+		}
+	})
+	.always(function() {
+		$('#loadingWrap').hide(); // 로딩이미지 숨기기
+	});
+}
+
+// 사용자 목록 엑셀 다운로드
+function getUserList() {
+	if($("#token").val() == '') {
+		alert('token is required!\r\nplease login.');
+		return;
+	}
+
+	window.open('http://'+host+':3001/api/download/exceldownload?pageNum=1&limit=100', '_blank');
+}
+
+// 파일 다운로드
+function filedownload(savedFileNm) {
+	/*if($('#token').val() == '' ) {
+		alert('token is required!');
+		return;
+	}*/
+
+	var urlToSend = 'http://'+host+':3001/api/user/filedownload?filename='+savedFileNm;
+	var req = new XMLHttpRequest();
+	req.open("GET", urlToSend, true);
+	req.setRequestHeader("x-access-token", $("#token").val());
+	req.setRequestHeader("Cache-Control", "no-cache, must-revalidate"); // IE support
+	req.setRequestHeader("Pragma", "no-cache"); // IE support
+
+	req.responseType = "blob";
+	req.onload = function (event) {
+		var blob = req.response;
+		var fileName = null;
+		var contentType = req.getResponseHeader("content-type");
+
+		// IE/EDGE seems not returning some response header
+		if (req.getResponseHeader("content-disposition")) {
+			var contentDisposition = req.getResponseHeader("content-disposition");
+			fileName = contentDisposition.substring(contentDisposition.indexOf("=")+1);
+		} else {
+			alert('파일이 존재하지 않습니다.');
+			return;
+
+			//fileName = "unnamed." + contentType.substring(contentType.indexOf("/")+1);
+		}
+
+		if (window.navigator.msSaveOrOpenBlob) {
+			// Internet Explorer
+			window.navigator.msSaveOrOpenBlob(new Blob([blob], {type: contentType}), fileName);
+		} else {
+			var el = document.getElementById("target");
+			el.href = window.URL.createObjectURL(blob);
+			el.download = fileName;
+			el.click();
+		}
+	};
+
+	req.send();
+}
+</script>
+</head>
+<body>
+	<h1>File Download Exam</h1>
+	<hr>
+
+	<form name="multiForm" id="multiForm" method="post" enctype="multipart/form-data">
+		ID : <input type="text" id="user_id" name="user_id" value="dhkang" />
+		PASSWORD : <input type="password" id="user_password" name="user_password" value="1234" onkeydown="checkEnter()"/>
+		<input type="button" id="login" value="login" /><br>
+
+		token : <input id='token' value='' disabled />
+		<input type="button" id="getFileList" value="파일목록 조회" />
+		<input type="button" id="getUserList" value="EXCEL" />
+		<br><br><br><br>
+
+		<div>
+			<label for="file">Choose file to upload</label>
+			<input type="file" id="fileName" name="fileName" multiple>
+		</div>
+		<div>
+			<input type="button" id="setFileUpload" value="submit" />
+		</div>
+	</form>
+	<br><br>
+
+	<div>
+		<label for="filelist">uploaded file list</label>
+	</div>
+	<div>
+		<ul id="filelist">
+		</ul>
+	</div>
+
+	<a id="target" style="display: none"></a>
+</body>
+</html>

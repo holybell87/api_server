@@ -1,0 +1,356 @@
+<!--
+	URL : http://127.0.0.1:3000/public/chatView.html 
+	
+	1. socket_server\app.js 실행 (socket_server> node app.js)
+	2. 브라우저에 위 URL 입력
+-->
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>채팅방</title>
+	<link rel="stylesheet" href="./css/style.css" />
+	<script src="./js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./js/socket.io.js"></script>
+	<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+	<script>
+		var chat_id = ''; // 채팅 아이디
+		var cnt = 0; // 현재 접속자 수
+		var socket = null; // Socket Object
+
+		// 준비상태
+		$(document).ready(function() {
+			// start connection
+			const url = 'http://127.0.0.1:3000'
+			//socket = io.connect();
+			socket = io.connect(url, { transports: ['websocket'] });
+
+			var connected = false;
+			const RETRY_INTERVAL = 5000; // 5000ms=5초
+			var RETRY_COUNT = 5;
+			var timeout;
+
+			socket.on('connect', function() {
+				console.log('connected');
+				connected = true;
+				RETRY_COUNT = 5;
+				clearTimeout(timeout);
+				//socket.send({'subscribe': 'schaftenaar'});
+				//content.html("<b>Connected to server.</b>");
+			});
+
+			socket.on('disconnect', function() {
+				connected = false;
+				console.log('disconnected');
+				//content.html("<b>Disconnected! Trying to automatically to reconnect in " +                   
+				//			RETRY_INTERVAL/1000 + " seconds.</b>");
+				retryConnectOnFailure(RETRY_INTERVAL);
+			});
+
+			var retryConnectOnFailure = function(retryInMilliseconds) {
+				// setTimeout([Function], [Milliseconds])
+				timeout = setTimeout(function() {
+					console.log('RETRY_COUNT : '+RETRY_COUNT);
+
+					// 연결된 상태인가
+					if(!connected) {
+						if(RETRY_COUNT == 0) {
+							// 재시도횟수 만료시 close
+							console.log('재연결시도를 종료합니다.');
+							socket.close();
+							return;
+						}
+
+						$.get('/ping', function(data) {
+							connected = true;
+							//window.location.href = unescape(window.location.pathname);
+						});
+
+						RETRY_COUNT--;
+						retryConnectOnFailure(retryInMilliseconds);
+					}
+				}, retryInMilliseconds);
+			}
+
+			// 엔터키 발생시
+			$('#chat_input').keypress(function(evt){
+				if((evt.keyCode || evt.which) == 13){
+					evt.preventDefault();
+					chat_input();
+				}
+			});
+
+			// 대화 입력
+			$('#chat_input').on("keyup", function () {
+				var flag = false;
+				var keycode = event.which;
+
+				if(keycode == 32 || (keycode >= 48 && keycode <= 57) || (keycode >= 65 && keycode <= 90) || (keycode >= 96 && keycode <= 107)
+					|| (keycode >= 109 && keycode <= 111) || (keycode >= 186 && keycode <= 192) || (keycode >= 219 && keycode <= 222) || keycode == 229) {
+					flag = true;
+				}
+				/*
+				if(this.value[0]=='/') {
+					flag = false;
+				}
+				*/
+				if(flag) {
+					//socket.emit("typing", {username: username, roomname: room_name});
+					socket.emit('typing', '{"channel": "chat", "chat_id":"' + chat_id + '"}');
+				}
+
+				if(this.value == '') {
+					//socket.emit("stop typing", {roomname: room_name});
+					socket.emit('stop typing', '{"channel": "chat", "chat_id":"' + chat_id + '"}');
+				}
+			});
+
+			// 브라우저를 닫을 시 이벤트
+			//$(window).unload(function() {
+			$(window).on('beforeunload', function() {
+				chat_out('2'); // 채팅 로그아웃
+			});
+
+			// 접속로그 소켓 이벤트
+			socket.on('socket_evt_logs', function (data) {
+	 			data = JSON.parse(data);
+	 			$('#chat_logs').empty();
+	 			for(var i=0; i<data.length; i++){
+					$('#chat_logs').append('<li>' + data[i].log + '('+data[i].date+')' + '</li>');
+	 			}
+
+				$('.chat_history_list').scrollTop($('#chat_logs').height()); 
+	 		});
+
+			// 현재 접속자 수 소켓 이벤트
+			socket.on('socket_evt_chat_user', function (data) {
+	 			data = JSON.parse(data);
+				cnt = data.length;
+	 			$('#now_user_cnt').html(cnt);
+	 		});
+
+	 		// 접속을 실패했을 경우 소켓 이벤트
+	 		socket.on('chat_fail', function (data) {
+				data = JSON.parse(data);
+				alert(data + '님은 이미 접속된 ID 입니다.');
+	 		});
+
+			// 접속을 성공했을 경우 소켓 이벤트
+			socket.on('chat_join', function (data) {
+	 			data = JSON.parse(data);
+				cnt = data.length;
+	 			$('#chat_user_list').empty();
+
+	 			for(var i=0; i<cnt; i++){
+	 				var user_id = data[i];
+					if(user_id == chat_id) {
+		 				$('#chat_user_list').append('<li><strong>' + user_id + ' (me)</strong></li>');
+						$('#chat_id').attr('disabled', true); // 비활성화
+					} else {
+		 				$('#chat_user_list').append('<li>' + user_id + '</li>');
+					}
+	 			}
+
+				$('#now_user_cnt').html(cnt);
+	 		});
+
+	 		// 접속을 종료했을 경우 소켓 이벤트
+	 		socket.on('someone_leaved', function (data) {
+				data = JSON.parse(data);
+				$('#now_user_cnt').html(--cnt);
+	 		});
+
+	 		// 서로간의 메시지를 전달하는 경우 소켓 이벤트
+	 		socket.on('message_go', function (data) {
+	 			data = decodeURIComponent(data);
+				data = ((data.replace(/&/g, '&amp;')).replace(/\"/g, '&quot;')).replace(/\'/g, '&#39;'); 
+				data = data.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	 			$('#chat_list').append('<li>' + data + '</li>');
+				$('.chat_list').scrollTop($('#chat_list').height()); 
+	 		});
+
+			// 현재 접속자 목록을 갱신하는 소켓 이벤트
+			socket.on('refresh_userlist', function (data) {
+				data = JSON.parse(data);
+				$('#chat_user_list').empty();
+
+				for(var i=0; i<data.length; i++){
+	 				var user_id = data[i];
+					if(user_id == chat_id) {
+		 				$('#chat_user_list').append('<li><strong>' + user_id + ' (me)</strong></li>');
+					} else {
+		 				$('#chat_user_list').append('<li>' + user_id + '</li>');
+					}
+				}
+			});
+
+			//socket.on("typing", function (user) {
+			socket.on("typing", function (data) {
+				var typing_notice = document.querySelector("#notice");
+				typing_notice.innerHTML  = data + "님이 메시지를 입력중입니다...";
+			});
+
+			socket.on("stop typing", function () {
+				//console.log('stop typing from '+room_name);
+				var typing_notice = document.querySelector("#notice");
+				typing_notice.innerHTML  = "&nbsp;";
+			});
+
+			/*socket.on('connect_timeout', (timeout) => {
+				console.log(timeout);
+			});*/
+/*
+			socket.on('disconnect', (reason) => {
+			  if(reason === 'io server disconnect') {
+				// the disconnection was initiated by the server, you need to reconnect manually
+				socket.connect();
+			  } 
+			  // else the socket will automatically try to reconnect
+			});
+
+			socket.on('connect_error', (error) => {
+				alert('소켓서버와 연결이 끊어졌습니다.');
+				socket.close();
+			});
+*/
+			chat_user();
+		});
+
+		// 채팅 입력 함수
+		function chat_input() {
+			if($('#chat_input').val() == '') {
+				alert('대화 글을 입력하세요.');
+				$('#chat_input').focus();
+				return;
+			}
+
+			var encodedMsg = encodeURIComponent($('#chat_input').val());
+
+			//채팅 메시지를 전송합니다.
+			socket.emit('message', '{"channel": "chat", "chat_id":"' + chat_id + '", "message":"' + encodedMsg + '"}');
+
+			socket.emit('stop typing', '{"channel": "chat", "chat_id":"' + chat_id + '"}');
+
+			$('#chat_input').val('');
+		}
+
+		// 채팅 나가기 이벤트
+		function chat_out(index) {
+			if(index == '1') { // 나가기 버튼 클릭한 경우 컨펌창 생성
+				var out_confirm = confirm("채팅방을 나가시겠습니까?");
+				if(out_confirm == true){
+					socket.emit('leave', '{"channel": "workspace", "chat_id":"' + chat_id + '"}');
+
+					$('#chat_id').attr('disabled', false); // 활성화
+					//$('#chat_id').val('ID 입력');
+					$('#chat_id').val('');
+					$('#chat_list').html('');
+					$('#chat_form').slideUp();
+					$('#chat_form_no').slideDown();
+
+					chat_id = '';
+				} else if(out_confirm == false){
+					return;
+				}
+			} else if(index == '2') { // 브라우저 닫혔을 경우 자동 나가기 처리
+				socket.emit('leave', '{"channel": "workspace", "chat_id":"' + chat_id + '"}');
+
+				$('#chat_id').attr('disabled', false); // 활성화
+				//$('#chat_id').val('ID 입력');
+				$('#chat_id').val('');
+				$('#chat_list').html('');
+				$('#chat_form').slideUp();
+				$('#chat_form_no').slideDown();
+
+				chat_id = '';
+			}
+		}
+
+		// 채팅 접속하기 이벤트
+		function chat_in() {
+			socket.emit('chat_conn', '{"channel": "workspace", "chat_id":"' + chat_id + '"}');
+
+			$('#chat_list').html('');
+		}
+
+		// 현재 접속자 정보
+		function chat_user() {
+			socket.emit('chat_user', '{"channel": "workspace"}');
+		}
+
+		// 채팅 접속하기 이벤트
+		function connection() {
+			chat_id = $('#chat_id').val();
+			//if(chat_id == '' || chat_id == 'ID 입력') {
+			if(chat_id == '') {
+				alert('ID를 입력해 주세요.');
+				$('#chat_id').focus();
+			} else {
+				chat_in();
+				$('#chat_form_no').slideUp();
+				$('#chat_form').slideDown();
+			}
+		}
+	</script>
+</head>
+<body>
+
+	<!-- 컨텐츠 영역 -->
+	<div id="contents">
+		<!-- <h1>채팅방 (blog.naver.com/musasin84, cafe.naver.com/buldon)</h1> -->
+		<div class="chat_content">
+			<!-- 로그인 영역 -->
+			<div class="chat_login">
+				<div id="chat_login_form" class="chat_login_form">
+					<input type="text" id="chat_id" class="login_input" value="" onclick="$(this).val('');" placeholder="ID 입력"/>&nbsp;&nbsp;<a href="javascript:connection();">접속하기</a>
+				</div>
+				<!-- 현재접속자수 영역 -->
+				<div class="now_user_cnt"><strong>현재접속자수</strong> : <span id="now_user_cnt">-</span></div>
+				<!-- //현재접속자수 영역 -->
+			</div>
+			<!-- //로그인 영역 -->
+
+			<!-- 채팅창 영역 -->
+			<!-- 미접속시 보여지는 영역 -->
+			<div id="chat_form_no" class="chat_form">
+				ID 입력 후 접속해 주세요.
+			</div>
+			<div id="chat_form" class="chat_form" style="display: none;">
+				<!-- 채팅창 글 영역 -->
+				<div class="chat_list">
+					<ul id="chat_list"></ul>
+				</div>
+				<div class="chat_user">
+					<!-- 현재접속자 목록 영역 -->
+					<div class="chat_user_list">
+						<ul id="chat_user_list"></ul>
+					</div>
+				</div>
+				<!-- 입력 영역 -->
+				<div class="chat_input">
+					<input type="text" id="chat_input" class="chat_input_txt" value="" placeholder="대화 글을 입력하세요." onclick="$(this).val('');" />
+				</div>
+				<!-- 버튼 영역 -->
+				<div class="chat_btn">
+					<a href="javascript:chat_input();">입력</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:chat_out('1');">나가기</a>
+				</div>
+			<!-- //채팅창 영역 -->
+			</div>
+
+			<!-- 접속로그 영역 -->
+			<div class="chat_history">
+				<p id="notice" class="chat_typing">&nbsp;</p>
+				<div class="chat_history_list">
+					<ul id="chat_logs"></ul>
+				</div>
+			<!-- //접속로그 영역 -->
+			</div>
+
+		</div>
+	</div>
+	<!-- //컨텐츠 영역 -->
+
+</body>
+</html>

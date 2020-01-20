@@ -1,0 +1,141 @@
+<html>
+<head>
+<title>:: 테이블 행(ROW) 위치 이동하기 ::</title>
+<script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script type="text/javascript">
+function checkeRowColorChange(obj) {
+	// 체크된 라디오 박스의 행(row)에 강조색깔로 바꾸기 전 모든 행(row)의 백그라운드를 흰색으로 변경한다.
+	jQuery("#girlTbody > tr").css("background-color", "#FFFFFF");
+
+	// 체크된 라디오 박스의 행이 몇번째에 위치하는지 파악한다.
+	var row = jQuery(".chkRadio").index(obj);
+
+	// 체크된 라디오 박스의 행(row)의 색깔을 변경한다.
+	jQuery("#girlTbody > tr").eq(row).css("background-color", "#FAF4C0");
+}
+
+function rowMoveEvent(direction) {
+	// 체크된 행(row)의 존재 여부를 파악한다.
+	if(jQuery(".chkRadio:checked").val()) {
+		// 체크된 라디오 박스의 행(row)을 변수에 담는다.
+		var row = jQuery(".chkRadio:checked").parent().parent();
+
+		// 체크된 행(row)의 이동 한계점을 파악하기 위해 인덱스를 파악한다.
+		var num = row.index();
+
+		// 전체 행의 개수를 구한다.
+		var max = (jQuery(".chkRadio").length - 1);	   // index는 0부터 시작하기에 -1을 해준다.
+
+		if(direction == "up") {
+			if(num == 0) { 
+				// 체크된 행(row)의 위치가 최상단에 위치해 있을경우 더이상 올라갈 수 없게 막는다.
+				alert("첫번째로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+				return false;
+			} else {
+				// 체크된 행(row)을 한칸 위로 올린다.
+				row.prev().before(row);
+			}
+		} else if(direction == "down") {
+			if(num >= max) {
+				// 체크된 행(row)의 위치가 최하단에 위치해 있을경우 더이상 내려갈 수 없게 막는다.
+				alert("마지막으로 지정되어 있습니다.\n더이상 순서를 변경할 수 없습니다.");
+				return false;
+			} else {
+				// 체크된 행(row)을 한칸 아래로 내린다.
+				row.next().after(row);
+			}
+		}
+	} else {
+		alert("선택된 행이 존재하지 않습니다\n위치를 이동시킬 행을 하나 선택해 주세요.");
+	}
+}
+
+// TR 순서 조회
+function checkOrder() {
+	var trList = $('input[name=chkRadio]').closest('tr').prevAll();
+	var tmp = new Array();
+	tmp = trList.prevObject;
+
+	console.log(tmp);
+
+	var orderIndex = '';
+	var orderId = '';
+	for(var i=0; i < tmp.length; i++) {
+		orderId += tmp[i].id;
+		orderIndex +=  tmp[i].id.replace('tr_','');
+
+		if(i !=  tmp.length-1) {
+			orderIndex += ', ';
+			orderId += ', ';
+		}
+	}
+
+	alert('orderIndex : '+ orderIndex + '\n'
+	+ 'orderId : '+ orderId);
+}
+</script>
+</head>
+<body>
+<table border="1" cellspacing="0">
+	<thead style="background-color:#000080;font-weight:bold;color:#FFFFFF;">
+		<tr>
+			<th style="width:30px;"></th>
+			<th style="width:60px;">NO</th>
+			<th style="width:100px;">:: 가수 ::</th>
+			<th style="width:300px;">:: 노래 제목 ::</th>
+			<th style="width:100px;">:: 발매일 ::</th>
+		</tr>
+	</thead>
+
+	<tbody id="girlTbody" style="text-align:center;">
+		<tr id="tr_1"> 
+			<td><input type="radio" class="chkRadio" name="chkRadio" onClick="checkeRowColorChange(this);"></td>
+			<td>1</td>
+			<td>트와이스</td>
+			<td style="text-align:left;">하트 쉐이커(Heart Shaker)</td>
+			<td>2017-12-11</td>
+		</tr>
+		<tr id="tr_2">
+			<td><input type="radio" class="chkRadio" name="chkRadio" onClick="checkeRowColorChange(this);"></td>
+			<td>2</td>
+			<td>레드벨벳</td>
+			<td style="text-align:left;">빨간 맛(Red Flavor)</td>
+			<td>2017-07-09</td>
+		</tr>
+		<tr id="tr_3">
+			<td><input type="radio" class="chkRadio" name="chkRadio" onClick="checkeRowColorChange(this);"></td>
+			<td>3</td>
+			<td>러블리즈</td>
+			<td style="text-align:left;">종소리(Twinkle)</td>
+			<td>2017-11-14</td>
+		</tr>
+		<tr id="tr_4">
+			<td><input type="radio" class="chkRadio" name="chkRadio" onClick="checkeRowColorChange(this);"></td>
+			<td>4</td>
+			<td>모모랜드</td>
+			<td style="text-align:left;">뿜뿜(BBoomBBoom)</td>
+			<td>2018-01-03</td>
+		</tr>
+		<tr id="tr_5">
+			<td><input type="radio" class="chkRadio" name="chkRadio" onClick="checkeRowColorChange(this);"></td>
+			<td>5</td>
+			<td>여자친구</td>
+			<td style="text-align:left;">귀를 기울이면(Love Whisper)</td>
+			<td>2017-08-01</td>
+		</tr>
+	</tbody>
+	<tfoot style="background-color:#A9A9A9;">
+		<tr>
+			<td colspan="5" style="text-align:center;">
+				<input type="button" onClick="rowMoveEvent('up');" value="▲" style="width:50px;"/>
+				&nbsp;&nbsp;
+				<input type="button" onClick="rowMoveEvent('down');" value="▼" style="width:50px;"/>
+			</td>
+		</tr>
+	</tfoot>
+</table>
+<br>
+<input type="button" value="순서확인" onclick="checkOrder()">
+</body>
+</html> 

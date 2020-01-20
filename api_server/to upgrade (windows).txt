@@ -1,0 +1,13 @@
+﻿---- node ----------------------------------------------------
+// 1. node.js 사이트에서 다운로드 후 설치
+https://nodejs.org/en/download/
+
+---- npm ----------------------------------------------------
+// 2. npm 재설치
+// 선택해서 버전을 설치할 경우,
+> npm install --global (--production) npm-windows-upgrade
+> npm-windows-upgrade
+
+// 최신버전 설치 방법
+> npm-windows-upgrade --npm-version latest
+

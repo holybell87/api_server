@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Keyword Highlight Page</title>
+
+<meta charset="UTF-8">
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-5.js"></script>
+<!--<script type="text/javascript" src="jquery.text.highlight.js"></script>-->
+<style>
+.highlight {
+	background-color: yellow;
+	color: #FF0000;
+	font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+	<div>
+		검색어 : <input  type="text" id="searchKeyword" value="" onkeydown="checkEnter()" />
+		<input type="button" id="search" value="검색" />
+		<input type="button" id="clear" value="초기화" />
+	</div>
+	<br>
+
+	<table class="tb_tp1" style="table-layout:fixed;">
+		<tbody id="keywordCallList">
+			<tr class="bg_pt">
+				<th class="tit" style="width:72%; background-color: #a0d2ec; text-align: left; border-top: 0px;"><strong>신은영(3118944) [CS리더서울센터/일반상담6]</strong></th>
+				<td class="tit" style="width:28%; background-color: #a0d2ec; border-top: 0px;">[2016-09-09 18:28:37]</td>
+			</tr>
+			<tr class="tmp">
+				<td class="txt callTextTd" colspan="2">
+					<div id="sttText" name="sttText" style="/*cursor:pointer;*/ height:368px; word-break:break-all; overflow: hidden; /*text-overflow: ellipsis;*/ white-space:pre-line;">
+<script>
+	var sttText = '[A]반갑습니다 [A]신지은입니다 [C]여보세요 [A]네 [A]여보세요 [C]아 네 [C]제가 여쭤볼려고 전화 드렸는데요 [A]네 [A]네 [C]어제 제가 그 뭐지 그 데이터를 다 써서 그 데이터를 제가 저기 충전을 최종적으로 제가 그거를 제가 저기 했었거든요 [A]네 [A]네 [A]고객님 [C]네 [C]그럼 어떻게 써야 되는지를 몰라서요 [A]아 네 [A]전화 잘 주셨습니다 [A]지금 문의 주시는 번호가 삼이 일에 **** *** **** 삼번이시구요 [A]고객님 [C]네 [A]예 [A]명의자분 성함 어떻게 되십니까 [C]김현화요 [A]네 [A]본인이신가요 [C]네 네 네 네 [A]아 네 [A]김윤아 고객님 감사하게도에 이 알 에스로 생년월일 인증을 해 주셨구요 [A]말씀하신 것처럼 데이터 상품권 만오천원 부분으로 하여서 구매를 해주신 걸로 확인이 되는데요 [A]고객님이 부분 따로 등록하지 않으시구 데이터 그대로 이용해 주시면 되세요 [A]고객님 [C]아 지금 제가 삼사 요금제를 쓰고 있어요 [C]지금 그게 초과가 됐거든요 [A]네네 [C]그거랑 별도로 그냥 써도 그 계속 이렇게 차감이 된단 얘기 인거죠 [A]네 [A]맞아요 [C]아 상관 없어요 [C]아 네 [C]알겠습니다 [C]그러면 그냥 그대로 써야 되겠네요 [C]네 [C]감사합니다 [A]네 [A]그리고 김하늘 고객님께서 지금 말씀해 주셨던 부분안내 도움 드렸구요 [C]네 네 네 네 [A]지금 그리고 추가적으로 확인했을 때 현재 고객님께서 추후에 기변하실 때 지원금 할인 혜택 받아 보실 수 있는 대상자인데요 [A]이 부분으로 따로 변경하거나 신청하시는 거 아니구요 [A]고객님 받으실 수 있는 지원 금액이라 던지 할인 혜택만 간략하게 무료로 확인하시고 전화 바로 종료해 주시면 되세요 [C]아 예 [C]알겠습니다 [A]네 [A]그럼 정확하게만 연결해 드릴 테니 원만한 대화 이어가세요 [C]네 [A]네 ;'
+
+	//console.log(sttText.replace(/\[A\]/g,"").replace(/\[C\]/g ,""));
+	sttText = sttText.replace(/\[A\]/g,"").replace(/\[C\]/g ,"");
+	$("#sttText").html(sttText);
+
+	$('#sttText').highlight('데이터');
+	$('#sttText').highlight('고객');
+
+function checkEnter() {
+	if (window.event.keyCode == 13) {
+		// 엔터키가 눌렸을 때 실행할 내용
+		var keyword = $('#searchKeyword').val();
+
+		if(keyword != "") {
+			searchKeyword(keyword);
+		} else {
+			alert('검색어를 입력하세요');
+		}
+	}
+}
+
+function searchKeyword(keyword) {
+	var stt = $('#sttText').html();
+
+	// span태그만 제거
+	stt = stt.replace(/<(\/span|span)([^>]*)>/gi, "");
+	//console.log(stt);
+
+	// 검색어를 하나만 입력했을시
+	if(keyword.split(",").length == 1) {
+		// 검출된 키워드가 없을시
+		if(stt.indexOf(keyword) == -1) {
+			alert("검색된 키워드가 없습니다.");
+			return;
+		}
+	}
+
+	// 하이라이트 제거
+	$('#sttText').removeHighlight();
+
+	// 하이라이트 표시
+	//$('#sttText').highlight(keyword);
+	jQuery.each(keyword.split(","), function(idx, val) {
+		$('#sttText').highlight(val);
+	});
+}
+
+$(document).ready(function() {
+	//$(".highlight").css({ backgroundColor: "#FFFF88" });
+
+	$('#search').click(function (e) {
+		e.preventDefault();
+
+		var keyword = $('#searchKeyword').val();
+
+		if(keyword != "") {
+			searchKeyword(keyword);
+		} else {
+			alert('검색어를 입력하세요');
+		}
+	});
+
+	$('#clear').click(function (e) {
+		e.preventDefault();
+
+		$('#sttText').removeHighlight();
+
+		$('#searchKeyword').val('');
+		$('#searchKeyword').focus();
+	});
+});
+</script>
+					</div>
+				</td>
+			</tr>
+	</table>
+</body>
+</html>

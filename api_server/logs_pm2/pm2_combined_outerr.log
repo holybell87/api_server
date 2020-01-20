@@ -1,0 +1,7 @@
+2019-07-30 09:32:41: [2019-07-30 09:32:41] [INFO] [app] (20108) ##########  Startup Server  ##########
+2019-07-30 09:32:42: [2019-07-30 09:32:42] [INFO] [scheduler] (20108) Started the scheduler. Running a task every 9:30
+2019-07-30 09:32:42: [2019-07-30 09:32:42] [INFO] [scheduler] (20108) Started the scheduler. Running a task every 21:30
+2019-07-30 09:32:42: [2019-07-30 09:32:42] [INFO] [app] (20108) API server (Express) has started on port 3001
+2019-07-30 09:32:42: [2019-07-30 09:32:42] [INFO] [mongo] (20108) Connected to mongoDB (v2.6.12) server (mongodb://10.62.130.52/test)
+2019-07-30 09:32:42: [2019-07-30 09:32:42] [INFO] [app] (20108) node version is v12.6.0
+2019-07-30 09:32:43: [2019-07-30 09:32:43] [INFO] [app] (20108) npm version is 6.10.0

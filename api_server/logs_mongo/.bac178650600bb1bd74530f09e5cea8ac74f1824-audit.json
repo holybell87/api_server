@@ -1,0 +1,64 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "logs_mongo\\.bac178650600bb1bd74530f09e5cea8ac74f1824-audit.json",
+    "files": [
+        {
+            "date": 1564533787831,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-07-31",
+            "hash": "9102ee3681c6b92843bd885311d4bc63"
+        },
+        {
+            "date": 1564618816906,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-01",
+            "hash": "1ba35765cc8dd2ed4be6ccdba4336e49"
+        },
+        {
+            "date": 1564704660228,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-02",
+            "hash": "1bd9dae5ef19c1075bde5a44e7f66965"
+        },
+        {
+            "date": 1564980573891,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-05",
+            "hash": "63874fad3ce3c379251c470a72ddd928"
+        },
+        {
+            "date": 1565051122053,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-06",
+            "hash": "7a6f4cf81686ea364cc8abfc4912465a"
+        },
+        {
+            "date": 1565138477576,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-07",
+            "hash": "e3b68a35fb037d7390d4ca43df1aace4"
+        },
+        {
+            "date": 1565223076770,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-08",
+            "hash": "827cfb3d21374131b85b5404974f9d52"
+        },
+        {
+            "date": 1565317176745,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-09",
+            "hash": "38f14d899e350a0ebc8e7c6c50f77a60"
+        },
+        {
+            "date": 1565568769431,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-12",
+            "hash": "179d32ec6707a566b471f79b3476c8ef"
+        },
+        {
+            "date": 1565657954284,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-13",
+            "hash": "d2e18d318fefde815ea07822f8f920fc"
+        },
+        {
+            "date": 1565742019222,
+            "name": "logs_mongo\\api_mongo-exception.log_2019-08-14",
+            "hash": "058b4b1fbac21f48ff07d77b8300ee49"
+        }
+    ]
+}
