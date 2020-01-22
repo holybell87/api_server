@@ -59,4 +59,4 @@ const scheduleLogsSchema = new Schema(
 );
 
 // Create Model & Export
-module.exports = mongoose.model("tbl_schedule_logs", scheduleLogsSchema); //collection name : tbl_schedule_logs
+module.exports = mongoose.model("tbl_schedule_logs", scheduleLogsSchema); //collection name : tbl_schedule_log
