@@ -36,24 +36,27 @@
 */
 
 // DEPENDENCIES
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Define Schemes
 const Schema = mongoose.Schema;
-const scheduleLogsSchema = new Schema({
-	exec_date: {
-		type: Date,
-		default: Date.now
-	},
-	set_dayOfWeek: String,
-	set_hour: Number,
-	set_min: Number,
-	name: String,
-	desc: String
-}, {
-	// __v 제거 (versionKey)
-	versionKey: false // You should be aware of the outcome after set to false
-});
+const scheduleLogsSchema = new Schema(
+  {
+    exec_date: {
+      type: Date,
+      default: Date.now
+    },
+    set_dayOfWeek: String,
+    set_hour: Number,
+    set_min: Number,
+    name: String,
+    desc: String
+  },
+  {
+    // __v 제거 (versionKey)
+    versionKey: false // You should be aware of the outcome after set to false
+  }
+);
 
 // Create Model & Export
-module.exports = mongoose.model('tbl_schedule_logs', scheduleLogsSchema); //collection name : tbl_errors
+module.exports = mongoose.model("tbl_schedule_logs", scheduleLogsSchema); //collection name : tbl_schedule_logs
