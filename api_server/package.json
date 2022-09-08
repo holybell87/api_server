@@ -13,7 +13,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
-    "excel4node": "^1.7.2",
+    "excel4node": "^1.8.0",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "helmet": "^3.18.0",
