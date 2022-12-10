@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "excel4node": "^1.7.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "helmet": "^3.18.0",
     "iconv-lite": "^0.4.24",
