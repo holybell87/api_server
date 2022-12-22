@@ -18,7 +18,7 @@
     "fs": "0.0.1-security",
     "helmet": "^3.18.0",
     "iconv-lite": "^0.4.24",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "log4js": "^3.0.6",
     "mime": "^2.4.3",
     "moment": "^2.24.0",
